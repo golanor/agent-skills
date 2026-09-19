@@ -1,7 +1,7 @@
 ---
 name: socratic-chavrusa
 description: Socratic/Chavrusa learning partner mode. Adds high cognitive friction to prevent deskilling and promote upskilling of research, cognitive, coding, and critical-thinking skills. Use when the user wants to learn a new topic, understand a paper, work through a derivation, asks "teach me", "let's learn", "explain" (when the goal is understanding rather than a quick answer), invokes "chavrusa mode" / "socratic mode", or when the request is core learning rather than logistics.
-version: 1.5.0
+version: 1.6.0
 tags: [skill, learning, pedagogy, socratic, chavrusa, critical-thinking]
 ---
 
@@ -24,7 +24,18 @@ Do NOT apply friction when:
 - The user has already made a genuine attempt and is stuck (shift from withholding to targeted hints)
 - The user says "just tell me" / "skip the socratic stuff" — this is an immediate, no-argument override for the current request
 
-**External references**: this skill points at companion skills (`anki-forge`, `english-writing-coach`, `stage-lessons`) and, optionally, a scheduler for spaced follow-ups. If a referenced skill, tool, or scheduler is absent in the current environment, apply the stated principle without the mechanics and tell the user what was skipped.
+**The override is a phrase, not a mood.** "Just tell me" wins instantly; impatience, a terse reply, or "hurry up" does not — those are the moment to hold the line for one more turn (they had time to ask; they have time to think once more). Without this distinction the override quietly erodes into "cave whenever pushed."
+
+**External references**: this skill points at companion skills (`anki-forge`, `english-writing-coach`, `stage-lessons`, and optionally the third-party `falsify` reasoning protocol) and, optionally, a scheduler for spaced follow-ups. If a referenced skill, tool, or scheduler is absent in the current environment, apply the stated principle without the mechanics and tell the user what was skipped.
+
+### Composition with `falsify` (agent-side reasoning discipline)
+If [falsify](https://github.com/263311487-ux/falsify) (MIT) is installed: it governs the **agent's own claims**; this skill governs the **interaction with the user**. Where their defaults collide inside a learning session, this skill wins:
+- **Questioning cadence**: falsify batches the whole frontier in one round; here it is one crux question per turn. Frontier batching is reserved for the Research-Design Grill (L0).
+- **Verdict surfacing**: falsify renders a visible thinking ledger with a calibrated conclusion; here conclusions are withheld until close-the-loop. Run the ledger *silently* while the user works; surface it at close-the-loop as the agent's graded answer.
+- **Nudge mode** is off in chavrusa sessions — the agent is already the questioner.
+- **Planted errors** (Debate/Student mode, announced) are an exercise, not fabricated evidence; falsify's guardrail does not apply to them.
+
+What falsify adds here: an L3 position must be stated as a falsifiable prediction ("if H, then we should observe O"); when the *user disputes a result*, the agent's verification runs under falsify — pre-registered prediction, cheapest real test, honest "cannot confirm" over manufactured agreement.
 
 ## Core Concepts
 

@@ -1,7 +1,7 @@
 ---
 name: skill-authoring-conventions
-description: House rules for writing and revising agent skills (SKILL.md files). Load whenever authoring a new skill, revising an existing one, or reviewing a skill's design. Distilled from Matt Pocock's writing-for-agents (mattpocock/skills, MIT) plus this collection's own norms.
-version: 1.0.0
+description: House rules for writing and revising agent skills (SKILL.md files). Load whenever authoring a new skill, revising an existing one, synthesizing a skill from a book or paper corpus, or reviewing a skill's design. Distilled from Matt Pocock's writing-for-agents, book-to-skill, and obra/superpowers (all MIT) plus this collection's own norms.
+version: 1.1.0
 tags: [skill, meta, skill-design, authoring, conventions]
 ---
 
@@ -37,6 +37,23 @@ Rules for writing skills that steer an agent reliably without bloating its conte
 - **Every content change propagates** to every location that carries the skill (working copy, backups, published copy) in the same session; published copies strip environment-specific paths and tool names.
 - **Third-party skills** (installed, not authored) keep their upstream LICENSE beside them and are never republished as one's own.
 - **Attribution**: when a device is adopted from someone else's skill, credit it inline ("adapted from mattpocock/skills `grilling`, MIT").
+
+## Synthesizing skills from source corpora
+
+(adapted from virgiliojr94/book-to-skill, MIT)
+
+- **Extract structure, not summaries.** Capture named frameworks with their exact formulations, principles, techniques, and anti-patterns — not chapter recaps. Preserve the author's precision: "The 5 Whys" is not "ask why multiple times". A skill is a toolkit, not a book report.
+- **REPL over the corpus.** Treat a large source as a queryable corpus, never a single read. `grep -n` for section offsets, `sed -n` for the slice you need, `grep -c` to confirm a framework is actually present before citing it. A 200-page book is ~75k tokens; re-reading it once per chapter costs ~2M input tokens, while targeted slices keep cost proportional to the output.
+- **Layer the output.** Keep the SKILL.md body under ~4,000 tokens and front-load it (compaction truncates from the end). Push depth into on-demand files that cost nothing until loaded: per-chapter notes, `glossary.md` (terms), `patterns.md` (techniques), and `cheatsheet.md`. The cheatsheet is a reasoning aid, not a keyword list — it carries the author's *judgment*: decision rules ("when X, do Y, because Z"), decision trees, trade-off matrices, thresholds. Bare term→definition rows belong in the glossary.
+- **Synthesize, never copy.** Skills derived from third-party copyrighted material stay private; publish only from your own writing, openly licensed content, or material you are authorized to redistribute.
+
+## Verification before claims
+
+(adapted from obra/superpowers `verification-before-completion` and `systematic-debugging`, MIT)
+
+- **Evidence before claims, always.** No completion or correctness claim without fresh verification evidence in the same message: identify the command that proves it, run it fresh and in full, read the whole output and exit code, then state the claim *with* its evidence. "Should work", "I'm confident", "the linter passed", "the subagent reported success" are not evidence — run it. Partial checks prove nothing; "different words so the rule doesn't apply" is spirit-over-letter evasion.
+- **Root cause before fixes.** Investigate (reproduce, read the full error, trace the data flow) → find a working reference and diff against it → one hypothesis, one variable, one minimal test → then fix. Symptom fixes are failure.
+- **Three failed fixes → question the architecture.** Fixes that each surface a new problem elsewhere signal a wrong design, not a failed hypothesis; do not attempt a fourth without re-examining the structure.
 
 ## Done test
 
