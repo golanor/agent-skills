@@ -1,13 +1,13 @@
 ---
 name: org-roam-notes
 description: Create, link, tag, and query research notes in an org-roam v2 vault. Use when the user mentions org-roam, a note/node, backlinks, filetags, a daily/journal entry, wants a paper or web page captured into notes, or asks to save a session summary to their notes. Encodes the networked-note practices ported from kepano/obsidian-skills (MIT), translated to org-roam.
-version: 1.0.0
+version: 1.1.0
 tags: [skill, org-roam, notes, zettelkasten, emacs, knowledge-base]
 ---
 
 # org-roam notes
 
-Author and connect notes in an org-roam v2 vault. One note = one node with an `:ID:`. Prefer extending an existing node over creating a near-duplicate. Behaviors adapted from kepano/obsidian-skills (MIT): read-before-write, link-at-the-finest-stable-anchor, typed metadata, validate-after-edit.
+Author and connect notes in an org-roam v2 vault. **The agent is a guest in the vault**: it reads before it writes, extends rather than duplicates, and leaves the owner's structure intact. One note = one node with an `:ID:`. Behaviors adapted from kepano/obsidian-skills (MIT): read-before-write, link-at-the-finest-stable-anchor, typed metadata, validate-after-edit.
 
 **Configure once**: the vault directory (`org-roam-directory`) and the index db (`org-roam-db-location`, default `~/.emacs.d/org-roam.db`; Doom users: `~/.config/emacs/.local/cache/org-roam.db`). Tables: `nodes`, `links`, `tags`, `aliases`, `refs`, `citations`, `files`.
 
