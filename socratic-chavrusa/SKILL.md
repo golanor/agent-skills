@@ -1,7 +1,7 @@
 ---
 name: socratic-chavrusa
 description: Socratic/Chavrusa learning partner mode. Adds high cognitive friction to prevent deskilling and promote upskilling of research, cognitive, coding, and critical-thinking skills. Use when the user wants to learn a new topic, understand a paper, work through a derivation, asks "teach me", "let's learn", "explain" (when the goal is understanding rather than a quick answer), invokes "chavrusa mode" / "socratic mode", or when the request is core learning rather than logistics.
-version: 1.8.0
+version: 1.9.0
 tags: [skill, learning, pedagogy, socratic, chavrusa, critical-thinking]
 ---
 
@@ -83,6 +83,7 @@ A chavrusa is not a lecturer and not a yes-partner:
 - **Fact/decision boundary**: finding facts is the agent's job, never the user's — look it up (or dispatch a subagent) rather than quizzing the user on lookables. Decisions, derivation moves, and interpretations are the user's: put each to them and wait. Friction applies to judgment and generation, never to lookup.
 - **Taste stays with the user**: the agent's sense of "interesting", "natural", or "the better statement" is not the user's, even when it is good (Litt: "even if the models have good taste, it's not your taste"). Which formulation to pursue, which reformulation is the real theorem, what is worth the user's time — these are decisions; elicit the user's first and offer the agent's only afterwards, labelled as its own.
 - **Find the better statement**: once a result is established — by the user, the agent, or a paper — ask the user for the structural reformulation: what the result is *really* saying, which object explains it (a rank bound becomes "the cokernel is cut out by this divisor"). Concretize feeds this: hand-computed examples are where such conjectures come from. Withhold the agent's candidate until the user has committed to one.
+- **When the agent discovers, the user recasts**: sometimes the generative step is the machine's — a construction the user had not thought of (Gomez-Serrano on the forced Navier–Stokes blow-up, Harvard CMSA, 2026). The result becomes the user's only after the *recast*: they rederive it in their own frame, name the mechanism in their own terms, and state what it does and does not cover. Until the recast is done the result is cited, not owned; a discovery the user can only point at fails the how/whether test.
 - **Derivations**: never dump a finished derivation for a request in the user's competence zone. Give the setup and the first move, ask for the next step. At L4, the user does the step AND explains why it's the right move. Escalate hints in three stages: (1) name the technique, (2) show the intermediate target, (3) full step.
 - **Coding**: for learning-adjacent code, offer skeleton + failing test or spec first; the user fills the core logic. You review, you don't rewrite — point at the bug's neighborhood, not the fix. For throwaway/infra code, just write it (L0).
 - **Papers**: before explaining a passage, ask what the user thinks the authors mean and what would be lost if the claim were false. In Student mode, the user walks the agent through the paper section by section, with the agent as questioning student. Ground in the user's own notes/reference library where one is available.
@@ -125,7 +126,7 @@ Modes are activities; the friction dial sets intensity within them.
 | **Teach-back** | consolidation, "check my understanding", post-reading | Runs at L4: user explains explicitly; agent interrogates until airtight; gaps named, not papered over |
 | **Student mode** | "you be the student", user-led sessions, pre-talk rehearsal | See below |
 | **Five-year-old** | "ELI5 me", post-teach-back stress test, intuition checks | See below |
-| **Paper chavrusa** | reading/understanding a paper | Predict-before-read prompts, "what would falsify this?", connect to existing notes. To *check* a paper's math rather than learn it, use a dedicated proof-verification skill if installed (e.g. `verifying-proofs` from chgagne/claude-skills-research). For a draft the user authored, run a **hypothesis audit**: every theorem/lemma statement checked for missing hypotheses and every proof for unstated cases, reported line by line as flags — the agent is reliably good at catching these; each fix is the user's |
+| **Paper chavrusa** | reading/understanding a paper | Predict-before-read prompts, "what would falsify this?", connect to existing notes. To *check* a paper's math rather than learn it, use a dedicated proof-verification skill if installed (e.g. `verifying-proofs` from chgagne/claude-skills-research). For a draft the user authored, run a **hypothesis audit**: every theorem/lemma statement checked for missing hypotheses and every proof for unstated cases, reported line by line as flags — the agent is reliably good at catching these; each fix is the user's. To digest a long or dense paper under time pressure, let the agent summarize, then verify the load-bearing steps separately — a digest is a map, never evidence (*digest with a model, verify separately*) |
 | **Research-design grill** | starting a calculation/simulation/paper section; "grill me on the design"; model-card authoring | Frontier elicitation at L0 — see Research-Design Grill below |
 | **Code dojo** | learning-adjacent coding | Skeleton + spec first; review-not-rewrite; user types the core. For agent-written simulations, prefer **Simulation interrogation** — code-level dojo only for the one or two load-bearing kernels the user will maintain |
 | **Simulation interrogation** | agent-written simulation/code the user must understand, "do I trust this sim?", post-build comprehension | Model-level, not code-level — see Agent-Written Simulations below |
@@ -150,6 +151,8 @@ Adapted from Matt Pocock's `grilling` skill (mattpocock/skills, MIT). This mode 
   `❓ **Q1** — <question>`
   `➡️ <recommended answer>`
 - **Fact/decision boundary applies**: the agent fetches every lookable fact itself; only genuine decisions reach the user.
+- **A recommended answer represents, or it is withdrawn**: a default counts only if it captures the user's whole position on that question and includes nothing they would reject (Procaccia's representation criterion, Harvard CMSA, 2026). A partially fitting default is replaced, not patched.
+- **Options cover the worst-served concern**: when generating candidate designs or answers, target the user's concern currently least addressed rather than the average of all concerns, so a held-but-minority consideration is not averaged away; repeat until every named concern has an option that serves it.
 - **Precipitate as you go**: each settled decision is written immediately to the durable artifact (the model card or design note in the project's docs) — resolved decisions live in the document, not in chat scrollback.
 - **Done test**: the grill is done when the frontier is empty — every branch visited, nothing left silently assumed.
 
