@@ -1,7 +1,7 @@
 ---
 name: skill-authoring-conventions
-description: House rules for writing and revising agent skills (SKILL.md files). Load whenever authoring a new skill, revising an existing one, synthesizing a skill from a book or paper corpus, or reviewing a skill's design. Distilled from Matt Pocock's writing-for-agents, book-to-skill, obra/superpowers (all MIT), Ink & Switch's tools-for-thought research philosophy, and the Harvard CMSA "AI for the working mathematician" talks (Litt, Gomez-Serrano, Radhakrishnan, Procaccia), plus this collection's own norms.
-version: 1.4.0
+description: House rules for writing and revising agent skills (SKILL.md files). Load whenever authoring a new skill, revising an existing one, synthesizing a skill from a book or paper corpus, or reviewing a skill's design. Distilled from Matt Pocock's writing-for-agents, book-to-skill, obra/superpowers (all MIT), Ink & Switch's tools-for-thought research philosophy, and the Harvard CMSA "AI for the working mathematician" talks (Litt, Gomez-Serrano, Radhakrishnan, Procaccia) and the 2026 Heidelberg Laureate Forum panel, plus this collection's own norms.
+version: 1.5.0
 tags: [skill, meta, skill-design, authoring, conventions]
 ---
 
@@ -26,7 +26,7 @@ Rules for writing skills that steer an agent reliably without bloating its conte
 
 ## Behavior design
 
-- **How, never whether.** A tool for thought changes *how* the user thinks and must never change *whether* they think (van Hardenberg, Ink & Switch). This is the acceptance test for every skill in this collection: name what cognitive work the user still does when the skill runs. If the answer is "none", the skill fails.
+- **How, never whether.** A tool for thought changes *how* the user thinks and must never change *whether* they think (van Hardenberg, Ink & Switch). This is the acceptance test for every skill in this collection: name what cognitive work the user still does when the skill runs. If the answer is "none", the skill fails. Corollary: speed of output is never a skill's goal — acceleration widens the gap between results and shared human understanding (Scholze, Heidelberg Laureate Forum, 2026), so a skill optimizes for what the user understands at the end, and treats faster-than-understanding as a defect.
 - **A verifier closes every loop.** Code the agent writes passes through typechecker, linter, and tests before the user sees it; prose and reasoning get "a stream of text back." Close that asymmetry: every skill output passes a verifier before it counts — a mechanical one where it exists (sanity checks, proof checks, citation resolution), and the user where none does (prediction before reveal, teach-back, validation matrix). Name the verifier in the skill's done-test.
 - **Prefer cheap certificates.** Shape claims and outputs so that evidence of correctness is cheap to check even when producing it was not (a 2500×2500 Hadamard matrix is trivially verified; the conjecture is not — Daniel Litt, Harvard CMSA, 2026). Rank each guarantee a skill makes by certificate tier — *proved* (exhaustive algebraic check) → *exhaustively checked* (every case at a deterministic setting) → *estimated* (sampled) — state the tier with the output, and pin every verified object by hash so a later claim refers to exactly the thing that was checked.
 - **Certified is not understood.** A machine-checked proof or passing certificate settles correctness, not legibility (Gomez-Serrano on the 166-page Lean-certified Navier–Stokes proof: "correct with high probability; understandable? Hell no"). Report two statuses for every verified result: its certificate tier *and* whether a human has followed the argument. A skill whose done-test accepts the first without the second is a slot machine with a checker attached.
