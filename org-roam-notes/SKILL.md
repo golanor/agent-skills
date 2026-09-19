@@ -1,7 +1,7 @@
 ---
 name: org-roam-notes
 description: Create, link, tag, and query research notes in an org-roam v2 vault. Use when the user mentions org-roam, a note/node, backlinks, filetags, a daily/journal entry, wants a paper or web page captured into notes, or asks to save a session summary to their notes. Encodes the networked-note practices ported from kepano/obsidian-skills (MIT), translated to org-roam.
-version: 1.1.0
+version: 1.2.0
 tags: [skill, org-roam, notes, zettelkasten, emacs, knowledge-base]
 ---
 
@@ -58,6 +58,10 @@ A notes skill should carry the user's own formatting conventions so every note r
 ## Capture a web page or paper
 
 Extract clean text first, then convert: `defuddle parse <url> --md` (if installed; else a plain fetch) → `pandoc -f markdown -t org` → wrap in a node with `:ID:`, `#+title`, `#+filetags`, and a source link. For a paper, the node's `:ROAM_REFS:` holds the arXiv/DOI URL so org-roam treats it as the reference note.
+
+## Open questions as pre-commitment
+
+Before any model is asked an open research question, the question goes into the vault first: an `* Open questions` heading in the thread's node (or a dedicated node tagged `:open:`), each entry stating the question, what would count as an answer, and how that answer would be checked cheaply. A question written down first is a commitment to *understand* its answer, not merely to receive it (Daniel Litt's problem lists, Harvard CMSA, 2026). When an answer arrives — from a model, a paper, or a computation — the owner records the resolution in their own words under the entry; the agent adds the source link and the check that was run.
 
 ## Daily notes
 

@@ -1,7 +1,7 @@
 ---
 name: skill-authoring-conventions
-description: House rules for writing and revising agent skills (SKILL.md files). Load whenever authoring a new skill, revising an existing one, synthesizing a skill from a book or paper corpus, or reviewing a skill's design. Distilled from Matt Pocock's writing-for-agents, book-to-skill, obra/superpowers (all MIT), and Ink & Switch's tools-for-thought research philosophy, plus this collection's own norms.
-version: 1.2.0
+description: House rules for writing and revising agent skills (SKILL.md files). Load whenever authoring a new skill, revising an existing one, synthesizing a skill from a book or paper corpus, or reviewing a skill's design. Distilled from Matt Pocock's writing-for-agents, book-to-skill, obra/superpowers (all MIT), Ink & Switch's tools-for-thought research philosophy, and Daniel Litt's working-mathematician lessons, plus this collection's own norms.
+version: 1.3.0
 tags: [skill, meta, skill-design, authoring, conventions]
 ---
 
@@ -28,6 +28,7 @@ Rules for writing skills that steer an agent reliably without bloating its conte
 
 - **How, never whether.** A tool for thought changes *how* the user thinks and must never change *whether* they think (van Hardenberg, Ink & Switch). This is the acceptance test for every skill in this collection: name what cognitive work the user still does when the skill runs. If the answer is "none", the skill fails.
 - **A verifier closes every loop.** Code the agent writes passes through typechecker, linter, and tests before the user sees it; prose and reasoning get "a stream of text back." Close that asymmetry: every skill output passes a verifier before it counts — a mechanical one where it exists (sanity checks, proof checks, citation resolution), and the user where none does (prediction before reveal, teach-back, validation matrix). Name the verifier in the skill's done-test.
+- **Prefer cheap certificates.** Shape claims and outputs so that evidence of correctness is cheap to check even when producing it was not (a 2500×2500 Hadamard matrix is trivially verified; the conjecture is not — Daniel Litt, Harvard CMSA, 2026). Rank each guarantee a skill makes by certificate tier — *proved* (exhaustive algebraic check) → *exhaustively checked* (every case at a deterministic setting) → *estimated* (sampled) — state the tier with the output, and pin every verified object by hash so a later claim refers to exactly the thing that was checked.
 - **The agent is a guest in the document.** In any skill that touches the user's notes, manuscripts, or code, the agent reads before writing, extends rather than duplicates, leaves the author's structure and voice intact, and makes its contributions distinguishable (comments, suggestions, marked cells) — never silent rewrites. "Guest" is the leading word; it says what the agent *is* rather than what it must not do.
 
 - **Exhaustive completion criteria.** Every protocol ends with an explicit done-test that prevents premature completion: "done when the frontier is empty", "done when an implementer could build it without asking a single question", "done when every named gap is closed or written to the note". "Wrap up" is not a criterion.
