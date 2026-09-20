@@ -1,7 +1,7 @@
 ---
 name: anki-forge
 description: Coach the user through manually authoring high-quality Anki cards and card workflows. Use when the user says "ankify", "make cards", "card forge", "flashcards", wants to turn a session/paper/note into Anki cards, or asks to review/critique their deck or card-writing workflow. Companion to socratic-chavrusa (its "Anki card forge" mode delegates here). The USER drafts every card; the agent critiques against an explicit rubric.
-version: 1.1.0
+version: 1.2.0
 tags: [skill, anki, spaced-repetition, memory, learning, socratic]
 ---
 
@@ -50,6 +50,7 @@ And the **connectivity check** (Nielsen/Matuschak): no orphans. A lone card on a
 - Answer that is a hedge ("it depends") → precision failure; capture the conditions as their own card
 - Card the user visibly doesn't care about → delete candidate; emotional connection is the top sustainability variable
 - Interference twins (two cards that blur together in review) → differentiate with examples/vivid contrast (Wozniak #11) or merge
+- Formatting that leaks the answer (a cloze blank sized to its word, one list option longer than its siblings, capitalization or punctuation cues) → equalize length and structure so nothing but retrieval answers the question
 
 ## Prompt-Type Toolbox
 

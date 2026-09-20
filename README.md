@@ -10,7 +10,7 @@ They are tool-agnostic markdown. Drop them into whatever agent reads skill files
 (Claude Code, Cursor, Kiro, Windsurf, or your own harness) and reference them by
 name or trigger.
 
-## The four skills
+## The nine skills
 
 | Skill | What it does | Core principle |
 |---|---|---|
@@ -18,6 +18,11 @@ name or trigger.
 | [`english-writing-coach`](english-writing-coach/SKILL.md) | Coaches your prose against explicit rubrics distilled from 13 craft books — it diagnoses and names problems, but **you** write every sentence. | Never ghost-writes. Every critique cites a named rubric item so you acquire the vocabulary, not just the corrected text. |
 | [`anki-forge`](anki-forge/SKILL.md) | Coaches you through authoring high-quality spaced-repetition cards. **You** draft every card; the agent critiques it against a rubric. | Card-writing *is* the studying (generation effect). The agent critiques and rejects; it never drafts cards for you. |
 | [`stage-lessons`](stage-lessons/SKILL.md) | Durable, in-repo project memory for long multi-stage work — per-stage reports and lessons files so a later session inherits calibration decisions and retracted conclusions instead of re-breaking them. | Write conclusions down *during* the run; revise by appending, never rewriting; read before you write. |
+| [`paper-narrative-review`](paper-narrative-review/SKILL.md) | A handling-editor pass over a paper's figure deck: does Fig. 1 hook, is each panel in the right figure, what analysis is missing, what to cut. | Critique only — names analyses to run and panels to move; never draws a figure or writes a caption. Adapted from AcademicForge (Apache-2.0). |
+| [`literature-synthesis-coach`](literature-synthesis-coach/SKILL.md) | Audits a related-work or survey draft: fetch-verifies every DOI/arXiv ID and flags paragraphs that are an annotated bibliography in disguise. | Every identifier must resolve; the first-sentence diagnostic separates argument from list. **You** write the synthesis. Adapted from AcademicForge (Apache-2.0). |
+| [`org-roam-notes`](org-roam-notes/SKILL.md) | How an agent should behave inside an org-roam v2 vault: read the node and its backlinks before writing, link by ID at the finest stable anchor, extend rather than duplicate. | Networked-note practices ported from kepano/obsidian-skills (MIT), translated Obsidian→org-roam. |
+| [`qec-stim-plumbing`](qec-stim-plumbing/SKILL.md) | Builds stabilizer-code simulations on request — Stim circuits, detector error models, decoders, Sinter threshold sweeps — from the user's stated spec. | Plumbing, not discovery: the agent builds what the spec names and runs structural sanity checks; choosing the code, noise, and reading the plot stay with the user. |
+| [`skill-authoring-conventions`](skill-authoring-conventions/SKILL.md) | House rules for writing and revising skills like these — structure, language, behavior design, corpus synthesis, verification, maintenance. | Single source of truth, positive phrasing, leading words, and an explicit done-test on every protocol. Distilled from Pocock's `writing-for-agents`, book-to-skill, and superpowers. |
 
 ## How they fit together
 
@@ -82,6 +87,17 @@ their authors, the phrasing and the workflow synthesis are mine.
 - **Learning science:** Bjork & Bjork (New Theory of Disuse), Kornell & Bjork,
   Kintsch (Construction-Integration), Andy Matuschak, Michael Nielsen, LeanAnki,
   Piotr Woźniak (SuperMemo), zettelkasten.de.
+- **Skill design:** Matt Pocock's [`writing-for-agents` and `grilling`](https://github.com/mattpocock/skills)
+  (MIT) — the authoring conventions and the frontier-elicitation device in the
+  Research-Design Grill mode are adapted from there; [book-to-skill](https://github.com/virgiliojr94/book-to-skill)
+  (MIT) for corpus-synthesis rules; [obra/superpowers](https://github.com/obra/superpowers)
+  (MIT) for verification-before-claims.
+- **Ported skills:** `paper-narrative-review` and `literature-synthesis-coach`
+  are adapted from [HughYau/AcademicForge](https://github.com/HughYau/AcademicForge)
+  (Apache-2.0, plumbing removed); `org-roam-notes` ports the note-taking practices
+  of [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) (MIT).
+- **Companion (not included):** [falsify](https://github.com/263311487-ux/falsify)
+  (MIT) — the chavrusa skill documents how to compose with it; install from upstream.
 - **Writing craft:** Zinsser, Strunk & White, Lamott, Pinker, Dreyer, Le Guin,
   Truss, Williams & Bizup, Bell, Turabian, Booth/Colomb/Williams, Silvia, and
   *Good Writing: 36 Ways to Improve Your Sentences*.
