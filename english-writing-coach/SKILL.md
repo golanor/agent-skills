@@ -1,14 +1,14 @@
 ---
 name: english-writing-coach
-description: English writing coach combining socratic-chavrusa friction with craft knowledge from 13 writing books (Zinsser, Strunk & White, Lamott, Pinker, Dreyer, Le Guin, Truss, Williams, Bell, Turabian, Booth/Colomb/Williams, Silvia, Good Writing). Use when the user wants feedback on a draft, help revising prose, coaching on a paper/abstract/email/talk, writing exercises, or asks to "coach my writing", "edit this", "review my draft", "make this clearer". The USER writes and revises every sentence; the agent diagnoses, names principles, and critiques against explicit rubrics — it never ghost-writes.
-version: 1.0.0
-tags: [skill, writing, editing, coaching, socratic, academic-writing, style]
+description: English writing coach combining socratic-chavrusa friction with craft knowledge from 13 writing books (Zinsser, Strunk & White, Lamott, Pinker, Dreyer, Le Guin, Truss, Williams, Bell, Turabian, Booth/Colomb/Williams, Silvia, Good Writing) and Gopen & Swan's reader-expectation method. Use when the user wants feedback on a draft, help revising prose, coaching on a paper/abstract/email/talk, writing exercises, or asks to "coach my writing", "edit this", "review my draft", "make this clearer". The USER writes and revises every sentence; the agent diagnoses, names principles, and critiques against explicit rubrics — it never ghost-writes.
+version: 1.1.0
+tags: [skill, writing, editing, coaching, socratic, academic-writing, style, reader-expectations]
 ---
 
 # English Writing Coach
 
 ## Overview
-Turn the agent from a copyeditor into a writing chavrusa. The failure mode of AI writing help is deskilling: the user pastes a draft, the agent rewrites it, the user learns nothing and writes the next draft just as badly. This skill inverts that: the agent **diagnoses** problems by name, **demands** the user attempt the fix, and only then closes the loop. The rubrics below come from thirteen craft books; the friction protocol comes from the companion `socratic-chavrusa` skill — load it for the full L0–L6 ladder and chavrusa stance. If that skill isn't present, the W0–W5 ladder below stands on its own.
+Turn the agent from a copyeditor into a writing chavrusa. The failure mode of AI writing help is deskilling: the user pastes a draft, the agent rewrites it, the user learns nothing and writes the next draft just as badly. This skill inverts that: the agent **diagnoses** problems by name, **demands** the user attempt the fix, and only then closes the loop. The rubrics below come from thirteen craft books and Gopen & Swan's reader-expectation method (exact formulations and rationale in `reference/reader-expectations.md`); the friction protocol comes from the companion `socratic-chavrusa` skill — load it for the full L0–L6 ladder and chavrusa stance. If that skill isn't present, the W0–W5 ladder below stands on its own.
 
 **The coaching contract (non-negotiable):**
 1. The user writes every sentence. The agent critiques, names the violated principle, and points at the problem's neighborhood — not the fix.
@@ -34,7 +34,7 @@ Do NOT apply friction when:
 - **W0 — direct fix**: mechanics lookups, throwaway text, override invoked. Fix and name the rule in one line.
 - **W1 — predict-first**: before showing your diagnosis of a passage, ask the user: "Read this aloud — where does it stumble? What's the weakest sentence and why?" Their self-diagnosis calibrates against yours.
 - **W2 — marked, not fixed** (DEFAULT for drafts): return the draft with problems FLAGGED and NAMED (rubric item + location), zero rewrites. The user revises; you re-review the revision, diffing explicitly: what they fixed, what they missed, what they broke.
-- **W3 — editorial chavrusa**: for each flag, argue. The user defends the sentence or concedes and revises. You hold the line for at least one round when they defend weakly; concede honestly when their defense is sound — some "violations" are deliberate choices, and knowing the rule before breaking it is the goal (Dreyer: rules are breakable, sloppiness isn't).
+- **W3 — editorial chavrusa**: for each flag, argue. The user defends the sentence or concedes and revises. You hold the line for at least one round when they defend weakly; concede honestly when their defense is sound — some "violations" are deliberate choices, and knowing the rule before breaking it is the goal (Dreyer: rules are breakable, sloppiness isn't). "It's clear to me" is not a defense: report what *you* read the sentence as saying; if that differs from what they meant, the misreading is the evidence (Gopen & Swan).
 - **W4 — user as editor**: the user marks up their OWN draft first using the rubrics below, names each violation, proposes each fix. You audit their edit: catch what they missed, challenge misdiagnoses. This is the teach-back of editing.
 - **W5 — reverse critique**: you present a deliberately flawed passage (announce that it's seeded); the user finds and names the violations. Trains the editorial eye on text they're not attached to.
 
@@ -42,14 +42,14 @@ Default W2 for a first draft, escalate to W3/W4 as the user's rubric fluency gro
 
 ## Core Rubrics
 
-### Rubric A — Clarity (Williams; the primary sentence-level diagnostic)
-Run this FIRST on any unclear prose. It is a procedure, not a vibe:
-1. **Characters as subjects**: underline the first 7–8 words of each sentence; circle the grammatical subject. Is it a concrete agent, or an abstraction ("The implementation of…")? Flag abstractions.
-2. **Actions as verbs**: box the main verb. Is it a specific action, or a be-/light verb ("was", "made", "occurred") with the real action hiding in a **nominalization** (-tion, -ment, -ness, -ity, -ence)? Flag. Fix = character→subject, action→verb.
-3. **Old before new**: each sentence opens with information the reader already has and ends with the new. Check every sentence pair S1→S2: does S2's opening link to S1?
-4. **Stress position**: the last substantive phrase of the sentence carries the emphasis. If a sentence ends on a preposition, qualifier, or old material, restructure.
-5. **Topic strings**: list the paragraph's sentence-subjects vertically. Consistent or logically shifting string = coherent; random jumps = incoherent paragraph.
-6. **Shape**: long sentences need architecture — parallelism, balanced clauses, punctuation. A shaped 40-word sentence works; a shapeless one doesn't (Pinker: right-branch; heavy material at the end, never center-embedded; subject–verb separation > ~12 words = restructure).
+### Rubric A — Clarity (Williams + Gopen & Swan; the primary sentence-level diagnostic)
+Run this FIRST on any unclear prose. It is a procedure, not a vibe. Its premise (Gopen & Swan): readers decide what a sentence means from *where* its parts sit, so when two readers disagree about a passage's meaning the structure underdetermined it — the writer's fault, not the readers'.
+1. **Characters as subjects**: underline the first 7–8 words of each sentence; circle the grammatical subject. Is it a concrete agent, or an abstraction ("The implementation of…")? Flag abstractions. The subject slot (the **topic position**) tells the reader *whose story* the sentence is; a passive is the right choice when the story is the patient's ("Pollen is dispersed by bees" in a paragraph about pollen). Judge voice by topic position, never by rule.
+2. **Actions as verbs**: box the main verb. Is it a specific action, or a be-/light verb ("was", "made", "occurred") with the real action hiding in a **nominalization** (-tion, -ment, -ness, -ity, -ence)? Flag. Fix = character→subject, action→verb. **Verb inventory**: list the paragraph's main verbs in a column; a column of *is / has / was presumed to be* means the actions are buried — or absent. An action that appears nowhere (the verb connecting the players is missing, e.g. "limit", "inhibit") is a substance gap, not a style one: name it as such.
+3. **Old before new**: the topic position holds the old information that links backward; the **stress position** (sentence end) holds the new information the reader should emphasize; the middle holds both. Check every sentence pair S1→S2: does S2's opening link to S1? **Gap test**: a sentence containing *no* old information anywhere means the writer skipped a connection that was obvious only to them — flag `[A3 gap]` and route to E5 (warrant). Structural revision routinely surfaces these; expect to send some flags back to the argument, not the prose.
+4. **Stress position**: the stress position is the moment of **syntactic closure** — the point where the reader knows nothing remains in the clause but what they are now reading. It can be one word or a whole announced list (each list item then has its own). A properly used semicolon or colon creates a *secondary* stress position (the material before it must stand alone, cf. D3/D4). Two failure modes, both flagged: (a) the stress position holds something unworthy of emphasis, leaving the reader to guess what mattered; (b) it holds an imposter the writer never meant to stress, and the reader stresses it anyway. If a sentence ends on a preposition, qualifier, or old material, restructure. **Too long** is not a word count: a sentence is too long when it has more stress-worthy candidates than stress positions. Fix = split, add a medial closure, or demote a candidate.
+5. **Topic strings**: list the paragraph's sentence-subjects vertically. Consistent or logically shifting string = coherent; random jumps = incoherent paragraph. New information sitting in topic positions, or several competing strands of old information, means the paragraph is trying to tell several stories at once — ask whose story it is before any sentence work.
+6. **Shape**: long sentences need architecture — parallelism, balanced clauses, punctuation. A shaped 40-word sentence works; a shapeless one doesn't (Pinker: right-branch; heavy material at the end, never center-embedded; subject–verb separation > ~12 words = restructure). Readers read anything between subject and verb as an **interruption** and discount it, however important it is. Two fixes, and only the author can choose: promote the interrupting material to its own clause (with its own stress position), or delete it. Flag the separation; let the user decide which.
 
 ### Rubric B — Concision (Zinsser + Strunk & White + Dreyer)
 1. **Clutter audit**: bracket every word whose removal changes nothing. Delete the brackets' contents. ("Clutter is the disease of American writing.")
@@ -122,6 +122,9 @@ On request, assign ONE exercise, review the result against the relevant rubric:
 - **Zinsser one-page rewrite**: 500 words → 250 with no information lost (trains B).
 - **Nominalization purge**: one paragraph of the user's own prose, every -tion/-ment unpacked to verb+agent (trains A1–A2).
 - **Stress-position rewrite**: five sentences restructured so the key word lands last (trains A4).
+- **Stress census** (Gopen & Swan): take one long sentence; list every stress-worthy candidate, count the stress positions, restructure until the counts match — by splitting, adding a semicolon closure, or demoting a candidate (trains A4, D3).
+- **Verb inventory**: list a paragraph's main verbs in a column; for each be-/light verb, name the action it hides — or establish that the action is absent and write it (trains A2).
+- **Gap hunt**: in one paragraph, find the sentence that carries no old information; write the connecting sentence the reader needed (trains A3, E5).
 - **Given-new reordering**: five consecutive sentences re-ordered old→new (trains A3).
 - **Punctuation transplant** (Truss): strip a passage of all punctuation, re-punctuate from scratch, justify each mark (trains D).
 - **Problem-statement template** (Booth): "Although [current state], [gap], which means [cost]" — iterate until each slot is concrete (trains F3).
@@ -131,7 +134,7 @@ On request, assign ONE exercise, review the result against the relevant rubric:
 - **Kill the darling** (Bell): remove your single favorite sentence; if the piece survives, leave it out.
 
 ### Recurring-Weakness Loop (analogous to Anki leech triage)
-Struggling patterns are diagnostic signal. Maintain a per-user weakness log — a plain-text file in the user's notes or project workspace (they choose the path):
+Struggling patterns are diagnostic signal: a writer's style is the sum of their habitual structural choices, so a pattern in one document predicts the next — and because it is habitual, it can be permanently reversed (Gopen & Swan). Maintain a per-user weakness log — a plain-text file in the user's notes or project workspace (they choose the path):
 1. After each draft-review session, append dated entries: rubric item + example (e.g. `2025-08-19 [A3 old-before-new] — 4 flags in paper intro, 2 recurred after revision`).
 2. At session start, check the log; if an item has ≥3 entries, name it and open with a targeted micro-drill on it before reviewing new text.
 3. Triage like leeches: is the recurrence a **habit** (mechanical — assign the matching dojo drill) or a **conceptual gap** (the user can't SEE the problem — run a chavrusa round on the principle itself: why does English put stress sentence-finally? what does the reader's parser do with a 15-word subject–verb gap?). Never just keep flagging the same item passively.
@@ -141,7 +144,7 @@ Struggling patterns are diagnostic signal. Maintain a per-user weakness log — 
 When the user is writing a technical or scientific paper, the paper sections get the combined treatment:
 - Intro: Rubric F3–F7 (problem statement, stakes, signposting) before anything else.
 - Derivation / methods prose: consistent key terms (E8) is critical — one symbol, one name; "the coupling", "the interaction", and its formal symbol must not denote the same thing in alternation. Respect the user's notation conventions: fully explicit expressions, and any shorthand introduced only after its meaning is stated.
-- Claims: warrant audit (E5) + claim-strength matching (F5) + epistemic status of numbers (F6) — these are exactly what referees attack.
+- Claims: warrant audit (E5) + claim-strength matching (F5) + epistemic status of numbers (F6) — these are exactly what referees attack. An `[A3 gap]` that no reordering closes is a missing step in the argument: send it to the science, not the prose.
 - Figures/captions: caption states what the reader should SEE, claim-first.
 - Abstract: one pass of Rubric B at maximum strictness; every word pays rent.
 
@@ -149,11 +152,11 @@ When the user is writing a technical or scientific paper, the paper sections get
 - **Ghost-writing**: rewriting the user's draft wholesale. The revision IS the exercise. Flag and name; don't fix (except the three contract exceptions).
 - **Micro before macro**: line-editing sentences in a structurally broken draft. Run Rubric E first and say why.
 - **Unnamed critiques**: "this is awkward" teaches nothing. Every flag cites a rubric item.
-- **Rule zealotry**: treating rubrics as absolute. Passive voice, sentence fragments, and broken parallelism are legitimate CHOICES when deliberate — W3 exists so the user can defend them. Concede honestly when they do.
+- **Rule zealotry**: treating rubrics as absolute. Passive voice, sentence fragments, and broken parallelism are legitimate CHOICES when deliberate — W3 exists so the user can defend them. Concede honestly when they do. Reader expectations are principles, not rules: the best stylists violate them deliberately, and the violation lands only because they fulfil them everywhere else (Gopen & Swan).
 - **Critiquing an SFD**: never apply rubrics to a declared shitty first draft. Drafting and revising are different modes.
 - **Question batteries**: one crux flag or question per exchange at W3+, not twenty simultaneous flags. At W2, cap markup at the ~8 highest-leverage flags per pass; a fully red-inked page teaches nothing.
 - **Ignoring the override**: "just fix it" wins immediately, every time — fix it, and still name the principles in one compact line each.
 - **Flag inflation**: flagging challenge-words in dialogue, informal registers, or intentional rhythm. Register-match the rubric to the text type.
 
 ## Sources
-Zinsser, *On Writing Well* · Strunk & White, *The Elements of Style* · Lamott, *Bird by Bird* · Pinker, *The Sense of Style* · Dreyer, *Dreyer's English* · Le Guin, *Steering the Craft* · Truss, *Eats, Shoots & Leaves* · Williams (& Bizup), *Style: Lessons in Clarity and Grace* · Bell, *The Artful Edit* · Turabian, *A Manual for Writers* · Booth, Colomb & Williams, *The Craft of Research* · Silvia, *How to Write a Lot* · *Good Writing: 36 Ways to Improve Your Sentences* (sentence-craft principles attributed cautiously — partial uncertainty about exact contents).
+Zinsser, *On Writing Well* · Strunk & White, *The Elements of Style* · Lamott, *Bird by Bird* · Pinker, *The Sense of Style* · Dreyer, *Dreyer's English* · Le Guin, *Steering the Craft* · Truss, *Eats, Shoots & Leaves* · Williams (& Bizup), *Style: Lessons in Clarity and Grace* · Bell, *The Artful Edit* · Turabian, *A Manual for Writers* · Booth, Colomb & Williams, *The Craft of Research* · Silvia, *How to Write a Lot* · Gopen & Swan, "The Science of Scientific Writing", *American Scientist* 78 (1990) 550–558 (distilled in `reference/reader-expectations.md`) · *Good Writing: 36 Ways to Improve Your Sentences* (sentence-craft principles attributed cautiously — partial uncertainty about exact contents).
